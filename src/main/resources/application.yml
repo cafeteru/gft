@@ -1,10 +1,15 @@
 spring:
   application:
     name: gft
-    version: "@project.version@"
 
 springdoc:
   api-docs:
-    path: /v3/api-docs
+    enabled: true
+    path: /api-docs
   swagger-ui:
-    path: /swagger-ui.html
+    enabled: true
+    path: /
+    urls:
+      - url: /api/prices.yml
+        name: Prices API
+
