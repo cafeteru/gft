@@ -1,0 +1,90 @@
+openapi: 3.0.1
+info:
+  title: GFT Test API
+  description: API for managing and querying product prices
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: Local server
+
+paths:
+  /prices/getPrice:
+    get:
+      summary: REST endpoint for querying prices
+      description: Endpoint for querying the price of a product based on application date, product ID, and brand ID.
+      operationId: getPrice
+      parameters:
+        - name: applicationDate
+          in: query
+          description: Application date
+          required: true
+          schema:
+            type: string
+          example: "2020-06-14-00.00.00"
+        - name: idProduct
+          in: query
+          description: Product identifier
+          required: true
+          schema:
+            type: integer
+          example: 35455
+        - name: idBrand
+          in: query
+          description: Brand identifier
+          required: true
+          schema:
+            type: integer
+          example: 1
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PriceRS'
+              example:
+                productId: 35455
+                brandId: 1
+                priceList: 1
+                startDate: "2023-01-01T00:00:00"
+                endDate: "2023-12-31T23:59:59"
+                finalPrice: 29.99
+        '204':
+          description: No content
+        '400':
+          description: Invalid parameters
+        '500':
+          description: Internal server error
+
+components:
+  schemas:
+    PriceRS:
+      type: object
+      properties:
+        productId:
+          type: integer
+          description: Unique identifier for the product
+          example: 35455
+        brandId:
+          type: integer
+          description: Identifier for the brand
+          example: 1
+        priceList:
+          type: integer
+          description: Price list identifier
+          example: 1
+        startDate:
+          type: string
+          format: local-date-time
+          description: Start date and time when the price becomes effective
+          example: "2023-01-01T00:00:00"
+        endDate:
+          type: string
+          format: local-date-time
+          description: End date and time when the price is no longer effective
+          example: "2023-12-31T23:59:59"
+        finalPrice:
+          type: number
+          format: double
+          description: Final price for the product within the specified date range
+          example: 29.99
