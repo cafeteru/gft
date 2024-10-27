@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import io.github.cafeteru.gft.common.dates.DateConverter;
 import io.github.cafeteru.gft.config.TestContainersTestConfig;
-import io.github.cafeteru.gft.prices.adapter.db.PriceRepository;
 import io.github.cafeteru.gft.prices.adapter.db.model.Price;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
