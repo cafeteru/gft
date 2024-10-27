@@ -20,6 +20,6 @@ sigue estos pasos:
       docker-compose.yml.
     - Iniciará la aplicación Spring Boot y la conectará a PostgreSQL.
 
-2. Accede a la aplicación en tu navegador web en la dirección `http://localhost:8080` para porder
+2. Accede a la aplicación en tu navegador web en la dirección `http://localhost:8080` para poder
    usar Swagger.
    
