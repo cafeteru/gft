@@ -80,6 +80,18 @@
             <version>5.10.0</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>1.18.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>1.18.0</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -155,7 +167,9 @@
                         <exclude>**/dto/*</exclude>
                         <exclude>**/model/*</exclude>
                         <exclude>**/ErrorController.class</exclude>
-                        <exclude>**/ProfileApplication.class</exclude>
+                        <exclude>**/GftApplication.class</exclude>
+                        <exclude>**/PricesApi.class</exclude>
+                        <exclude>**/ApiUtil.class</exclude>
                     </excludes>
                 </configuration>
                 <executions>

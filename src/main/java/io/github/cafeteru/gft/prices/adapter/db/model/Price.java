@@ -8,7 +8,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -37,7 +36,7 @@ public class Price {
   private Integer productId;
   @Column(name = "PRIORITY")
   private Integer priority;
-  @Column(name = "PRICE")
+  @Column(name = "PRICE", precision = 19, scale = 2)
   private BigDecimal price;
   @Column(name = "CURR")
   private String curr;
