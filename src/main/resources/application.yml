@@ -1,6 +1,25 @@
 spring:
   application:
     name: gft
+  datasource:
+    url: jdbc:postgresql://localhost:5432/prices_db
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/db.changelog-master.yaml
+
+logging:
+  file:
+    name: logs/gft.log
 
 springdoc:
   api-docs:
@@ -12,4 +31,3 @@ springdoc:
     urls:
       - url: /api/prices.yml
         name: Prices API
-
