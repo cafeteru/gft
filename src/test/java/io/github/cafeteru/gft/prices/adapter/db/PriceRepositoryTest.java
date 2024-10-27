@@ -10,6 +10,8 @@ import io.github.cafeteru.gft.config.TestContainersTestConfig;
 import io.github.cafeteru.gft.prices.adapter.db.model.Price;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -33,6 +35,18 @@ class PriceRepositoryTest {
 
   private final int productId = 35455;
   private final int brandId = 1;
+
+  @BeforeEach
+  public void init() {
+    priceRepository.deleteAll();
+    List<Price> priceList = List.of(
+        createPrice("2020-06-14-00.00.00", "2020-12-31-23.59.59", 1, 0, BigDecimal.valueOf(35.50)),
+        createPrice("2020-06-14-15.00.00", "2020-06-14-18.30.00", 2, 1, BigDecimal.valueOf(25.45)),
+        createPrice("2020-06-15-00.00.00", "2020-06-15-11.00.00", 3, 1, BigDecimal.valueOf(30.50)),
+        createPrice("2020-06-15-16.00.00", "2020-12-31-23.59.59", 4, 1, BigDecimal.valueOf(38.95))
+    );
+    priceRepository.saveAll(priceList);
+  }
 
   @Test
   void when_getPrice_with_date_before_all_should_return_a_empty_list() {

@@ -11,7 +11,7 @@ import org.mapstruct.ReportingPolicy;
 @Mapper(
     componentModel = MappingConstants.ComponentModel.SPRING,
     unmappedTargetPolicy = ReportingPolicy.IGNORE,
-    uses = DateConverter.class
+    uses = {DateConverter.class}
 )
 public interface PriceMapper {
 

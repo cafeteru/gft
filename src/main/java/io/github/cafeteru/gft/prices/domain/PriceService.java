@@ -18,9 +18,9 @@ public class PriceService implements PricePort {
   private final PriceMapper priceMapper;
 
   @Override
-  public PriceRS getPrice(LocalDateTime applicationDate,
-      Integer idProduct, Integer idBrand) {
-    final var priceList = repository.getPrice(applicationDate, idProduct, idBrand);
+  public PriceRS getPrice(final LocalDateTime applicationDate,
+      final Integer productId, final Integer brandId) {
+    final var priceList = repository.getPrice(applicationDate, productId, brandId);
     final var result = priceList.isEmpty() ? null :
         priceList.stream().max(Comparator.comparing(Price::getPriority))
             .orElse(priceList.getFirst());

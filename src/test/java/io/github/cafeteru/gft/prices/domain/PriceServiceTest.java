@@ -4,12 +4,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
-import io.github.cafeteru.gft.common.dates.DateConverter;
+import io.github.cafeteru.gft.domain.model.PriceRS;
 import io.github.cafeteru.gft.prices.adapter.api.mapper.PriceMapper;
-import io.github.cafeteru.gft.prices.adapter.api.mapper.PriceMapperImpl;
 import io.github.cafeteru.gft.prices.adapter.db.PriceRepository;
 import io.github.cafeteru.gft.prices.adapter.db.model.Price;
 import java.math.BigDecimal;
@@ -21,13 +20,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 
 @ExtendWith(MockitoExtension.class)
-@SpringBootTest
-@Import({DateConverter.class, PriceMapperImpl.class})
 public class PriceServiceTest {
 
   private PriceService priceService;
@@ -35,19 +29,23 @@ public class PriceServiceTest {
   @Mock
   private PriceRepository priceRepository;
 
-  @Autowired
+  @Mock
   private PriceMapper priceMapper;
+
+  private final LocalDateTime dateTime = LocalDateTime.now();
+  private final Integer productId = 1;
+  private final Integer brandId = 1;
 
   private Price price;
 
   @BeforeEach
   void setUp() {
     price = Price.builder()
-        .productId(1)
-        .brandId(1)
+        .productId(productId)
+        .brandId(brandId)
         .priceList(1)
-        .startDate(LocalDateTime.now())
-        .endDate(LocalDateTime.now())
+        .startDate(dateTime)
+        .endDate(dateTime)
         .price(BigDecimal.ONE)
         .priority(0)
         .build();
@@ -56,24 +54,31 @@ public class PriceServiceTest {
 
   @Test
   void when_getPrice_not_found_results_should_return_null() {
-    when(priceRepository.getPrice(any(), anyInt(), anyInt())).thenReturn(Collections.emptyList());
-    var result = priceService.getPrice(LocalDateTime.now(), 1, 1);
+    when(priceRepository.getPrice(eq(dateTime), eq(productId), eq(brandId))).thenReturn(
+        Collections.emptyList());
+
+    final var result = priceService.getPrice(dateTime, productId, brandId);
+
     assertNull(result);
   }
 
   @Test
   void when_getPrice_found_one_result_should_return_it() {
-    when(priceRepository.getPrice(any(), anyInt(), anyInt())).thenReturn(
+    when(priceRepository.getPrice(eq(dateTime), eq(productId), eq(brandId))).thenReturn(
         Collections.singletonList(price));
-    var expected = priceMapper.toPriceRS(price);
-    var result = priceService.getPrice(LocalDateTime.now(), 1, 1);
+    when(priceMapper.toPriceRS(any())).thenReturn(new PriceRS());
+    final var expected = new PriceRS();
+
+    final var result = priceService.getPrice(dateTime, productId, brandId);
+
     assertNotNull(result);
-    assertEquals(expected, result);
+    assertEquals(expected.getBrandId(), result.getBrandId());
   }
 
   @Test
   void when_getPrice_found_many_result_should_return_the_one_with_the_highest_priority() {
-    var pricePriority = Price.builder()
+    when(priceMapper.toPriceRS(any())).thenReturn(new PriceRS());
+    final var pricePriority = Price.builder()
         .productId(10)
         .brandId(10)
         .priceList(10)
@@ -82,10 +87,15 @@ public class PriceServiceTest {
         .price(BigDecimal.TEN)
         .priority(1)
         .build();
-    when(priceRepository.getPrice(any(), anyInt(), anyInt())).thenReturn(
+    final var priceRs = new PriceRS();
+    priceRs.setBrandId(10);
+    when(priceMapper.toPriceRS(pricePriority)).thenReturn(priceRs);
+    when(priceRepository.getPrice(eq(dateTime), eq(productId), eq(brandId))).thenReturn(
         List.of(price, pricePriority));
-    var expected = priceMapper.toPriceRS(pricePriority);
-    var result = priceService.getPrice(LocalDateTime.now(), 1, 1);
+
+    final var expected = priceMapper.toPriceRS(pricePriority);
+
+    final var result = priceService.getPrice(dateTime, productId, brandId);
     assertNotNull(result);
     assertEquals(expected, result);
   }
