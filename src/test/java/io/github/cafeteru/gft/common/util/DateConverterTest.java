@@ -1,4 +1,4 @@
-package io.github.cafeteru.gft.common.dates;
+package io.github.cafeteru.gft.common.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;

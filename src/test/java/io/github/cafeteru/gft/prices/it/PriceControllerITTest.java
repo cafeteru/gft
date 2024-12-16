@@ -3,9 +3,9 @@ package io.github.cafeteru.gft.prices.it;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-import io.github.cafeteru.gft.common.adapter.api.dto.ErrorDto;
-import io.github.cafeteru.gft.config.TestContainersConfig;
+import io.github.cafeteru.gft.common.config.TestContainersConfig;
 import io.github.cafeteru.gft.domain.model.PriceRS;
+import io.github.cafeteru.gft.prices.infrastructure.adapter.in.api.dto.ErrorDto;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

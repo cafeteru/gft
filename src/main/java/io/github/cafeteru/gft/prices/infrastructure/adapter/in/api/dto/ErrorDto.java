@@ -1,4 +1,4 @@
-package io.github.cafeteru.gft.common.adapter.api.dto;
+package io.github.cafeteru.gft.prices.infrastructure.adapter.in.api.dto;
 
 
 import lombok.AllArgsConstructor;

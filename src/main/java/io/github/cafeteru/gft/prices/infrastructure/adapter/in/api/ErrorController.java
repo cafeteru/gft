@@ -1,6 +1,6 @@
-package io.github.cafeteru.gft.common.adapter.api;
+package io.github.cafeteru.gft.prices.infrastructure.adapter.in.api;
 
-import io.github.cafeteru.gft.common.adapter.api.dto.ErrorDto;
+import io.github.cafeteru.gft.prices.infrastructure.adapter.in.api.dto.ErrorDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

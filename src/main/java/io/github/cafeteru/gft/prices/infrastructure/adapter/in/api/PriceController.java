@@ -1,7 +1,7 @@
 package io.github.cafeteru.gft.prices.infrastructure.adapter.in.api;
 
 import io.github.cafeteru.gft.adapters.api.PricesApi;
-import io.github.cafeteru.gft.common.dates.DateConverter;
+import io.github.cafeteru.gft.common.util.DateConverter;
 import io.github.cafeteru.gft.domain.model.PriceRS;
 import io.github.cafeteru.gft.prices.application.port.in.PricePort;
 import java.util.Objects;

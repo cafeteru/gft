@@ -1,4 +1,4 @@
-package io.github.cafeteru.gft.config;
+package io.github.cafeteru.gft.common.config;
 
 import jakarta.annotation.PreDestroy;
 import java.util.List;

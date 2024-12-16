@@ -1,4 +1,4 @@
-package io.github.cafeteru.gft.prices.domain;
+package io.github.cafeteru.gft.prices.application.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -11,7 +11,7 @@ import static org.mockito.Mockito.when;
 
 import io.github.cafeteru.gft.domain.model.PriceRS;
 import io.github.cafeteru.gft.prices.application.port.out.PriceRepository;
-import io.github.cafeteru.gft.prices.application.service.PriceService;
+import io.github.cafeteru.gft.prices.domain.Price;
 import io.github.cafeteru.gft.prices.infrastructure.adapter.in.api.mapper.PriceMapper;
 import io.github.cafeteru.gft.prices.infrastructure.adapter.out.db.mapper.PriceEntityMapper;
 import io.github.cafeteru.gft.prices.infrastructure.adapter.out.db.model.PriceEntity;

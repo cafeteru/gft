@@ -1,14 +1,12 @@
-package io.github.cafeteru.gft.prices.adapter.api;
+package io.github.cafeteru.gft.prices.infrastructure.adapter.in.api;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
-import io.github.cafeteru.gft.common.dates.DateConverter;
+import io.github.cafeteru.gft.common.util.DateConverter;
 import io.github.cafeteru.gft.domain.model.PriceRS;
 import io.github.cafeteru.gft.prices.application.service.PriceService;
-import io.github.cafeteru.gft.prices.infrastructure.adapter.in.api.PriceController;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

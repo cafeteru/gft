@@ -1,4 +1,4 @@
-package io.github.cafeteru.gft.common.dates;
+package io.github.cafeteru.gft.common.util;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

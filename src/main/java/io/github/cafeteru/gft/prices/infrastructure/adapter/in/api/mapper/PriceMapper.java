@@ -1,6 +1,6 @@
 package io.github.cafeteru.gft.prices.infrastructure.adapter.in.api.mapper;
 
-import io.github.cafeteru.gft.common.dates.DateConverter;
+import io.github.cafeteru.gft.common.util.DateConverter;
 import io.github.cafeteru.gft.domain.model.PriceRS;
 import io.github.cafeteru.gft.prices.domain.Price;
 import org.mapstruct.Mapper;

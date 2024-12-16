@@ -1,13 +1,12 @@
-package io.github.cafeteru.gft.prices.adapter.db;
+package io.github.cafeteru.gft.prices.application.port.out;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import io.github.cafeteru.gft.common.dates.DateConverter;
-import io.github.cafeteru.gft.config.TestContainersConfig;
-import io.github.cafeteru.gft.prices.application.port.out.PriceRepository;
+import io.github.cafeteru.gft.common.config.TestContainersConfig;
+import io.github.cafeteru.gft.common.util.DateConverter;
 import io.github.cafeteru.gft.prices.infrastructure.adapter.out.db.model.PriceEntity;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
