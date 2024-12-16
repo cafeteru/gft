@@ -1,2 +1,15 @@
 server:
   port: 8081
+spring:
+  liquibase:
+    enabled: true
+  sql:
+    init.mode: always
+  datasource:
+    url: jdbc:postgresql://localhost:5433/test_db
+    username: test_user
+    password: test_pass
+  jpa:
+    hibernate.ddl-auto: none
+    show-sql: true
+

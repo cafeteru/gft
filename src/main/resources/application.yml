@@ -19,7 +19,7 @@ spring:
 
 logging:
   file:
-    name: logs/gft.log
+    name: target/logs/gft.log
 
 springdoc:
   api-docs:
