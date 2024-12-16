@@ -9,9 +9,9 @@ import org.mapstruct.MappingTarget;
 @Mapper(componentModel = "spring")
 public interface PriceEntityMapper {
 
-  Price toDomain(PriceEntity entity);
+  Price toPrice(PriceEntity entity);
 
-  PriceEntity toEntity(Price price);
+  PriceEntity toPriceEntity(Price price);
 
   @Mapping(target = "id", ignore = true)
   void updateEntityFromDomain(Price price, @MappingTarget PriceEntity entity);

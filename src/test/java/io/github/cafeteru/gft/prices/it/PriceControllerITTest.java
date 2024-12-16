@@ -15,9 +15,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Import(TestContainersConfig.class)
+@ActiveProfiles("test")
 class PriceControllerITTest {
 
   private static final String GET_PRICE = "/prices/getPrice";

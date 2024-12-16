@@ -23,7 +23,7 @@ public class PriceService implements PricePort {
   public PriceRS getPrice(final LocalDateTime applicationDate,
       final Integer productId, final Integer brandId) {
     final var priceEntities = repository.getPrice(applicationDate, productId, brandId);
-    final var prices = priceEntities.stream().map(priceEntityMapper::toDomain).toList();
+    final var prices = priceEntities.stream().map(priceEntityMapper::toPrice).toList();
     final var result = prices.isEmpty() ?
         null :
         prices.stream().max(Comparator.comparing(Price::getPriority)).orElse(prices.getFirst());

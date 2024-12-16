@@ -2,7 +2,7 @@ server:
   port: 8081
 spring:
   liquibase:
-    enabled: false
+    enabled: true
   sql:
     init.mode: always
   datasource:
@@ -10,6 +10,6 @@ spring:
     username: test_user
     password: test_pass
   jpa:
-    hibernate.ddl-auto: create-drop
+    hibernate.ddl-auto: none
     show-sql: true
 

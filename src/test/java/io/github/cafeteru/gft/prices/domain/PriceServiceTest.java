@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 import io.github.cafeteru.gft.domain.model.PriceRS;
@@ -47,6 +47,7 @@ public class PriceServiceTest {
 
   private PriceEntity priceEntity;
   private Price price;
+  private PriceRS priceRS;
 
   @BeforeEach
   void setUp() {
@@ -68,6 +69,8 @@ public class PriceServiceTest {
         .price(BigDecimal.ONE)
         .priority(0)
         .build();
+    priceRS = new PriceRS();
+    priceRS.setBrandId(brandId);
   }
 
   @Test
@@ -79,45 +82,58 @@ public class PriceServiceTest {
 
     assertNull(result);
     verify(priceRepository).getPrice(dateTime, productId, brandId);
-    verifyNoInteractions(priceMapper);
-    verifyNoInteractions(priceEntityMapper);
+    verify(priceEntityMapper, times(0)).toPrice(any());
+    verify(priceMapper, times(1)).toPriceRS(null);
   }
 
   @Test
   void when_getPrice_found_one_result_should_return_it() {
     when(priceRepository.getPrice(eq(dateTime), eq(productId), eq(brandId))).thenReturn(
         Collections.singletonList(priceEntity));
-    when(priceMapper.toPriceRS(any())).thenReturn(new PriceRS());
-    final var expected = new PriceRS();
+    when(priceEntityMapper.toPrice(priceEntity)).thenReturn(price);
+    when(priceMapper.toPriceRS(price)).thenReturn(priceRS);
 
     final var result = priceService.getPrice(dateTime, productId, brandId);
 
     assertNotNull(result);
-    assertEquals(expected.getBrandId(), result.getBrandId());
+    assertEquals(priceRS.getBrandId(), result.getBrandId());
+    verify(priceEntityMapper, times(1)).toPrice(priceEntity);
+    verify(priceMapper, times(1)).toPriceRS(price);
   }
 
   @Test
   void when_getPrice_found_many_result_should_return_the_one_with_the_highest_priority() {
-    final var pricePriority = PriceEntity.builder()
+    final PriceEntity priceEntityPriority = PriceEntity.builder()
         .productId(10)
-        .brandId(10)
+        .brandId(20)
         .priceList(10)
         .startDate(LocalDateTime.MAX)
         .endDate(LocalDateTime.MAX)
         .price(BigDecimal.TEN)
         .priority(1)
         .build();
-    final var priceRs = new PriceRS();
-    priceRs.setBrandId(10);
-    when(priceMapper.toPriceRS(any())).thenReturn(new PriceRS());
-    when(priceMapper.toPriceRS(any())).thenReturn(priceRs);
+    final Price pricePriority = Price.builder()
+        .productId(10)
+        .brandId(20)
+        .priceList(10)
+        .startDate(LocalDateTime.MAX)
+        .endDate(LocalDateTime.MAX)
+        .price(BigDecimal.TEN)
+        .priority(1)
+        .build();
+    priceRS.setBrandId(20);
+    when(priceEntityMapper.toPrice(priceEntity)).thenReturn(price);
+    when(priceEntityMapper.toPrice(priceEntityPriority)).thenReturn(pricePriority);
     when(priceRepository.getPrice(eq(dateTime), eq(productId), eq(brandId))).thenReturn(
-        List.of(priceEntity, pricePriority));
-
-    final var expected = priceMapper.toPriceRS(pricePriority);
+        List.of(priceEntity, priceEntityPriority));
+    when(priceMapper.toPriceRS(pricePriority)).thenReturn(priceRS);
 
     final var result = priceService.getPrice(dateTime, productId, brandId);
+
     assertNotNull(result);
-    assertEquals(expected, result);
+    assertEquals(priceRS.getBrandId(), result.getBrandId());
+    verify(priceEntityMapper, times(1)).toPrice(priceEntity);
+    verify(priceMapper, times(0)).toPriceRS(price);
+    verify(priceMapper, times(1)).toPriceRS(pricePriority);
   }
 }
