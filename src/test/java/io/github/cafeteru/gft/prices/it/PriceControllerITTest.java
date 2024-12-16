@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import io.github.cafeteru.gft.common.adapter.api.dto.ErrorDto;
-import io.github.cafeteru.gft.config.TestContainersTestConfig;
+import io.github.cafeteru.gft.config.TestContainersConfig;
 import io.github.cafeteru.gft.domain.model.PriceRS;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Import(TestContainersTestConfig.class)
+@Import(TestContainersConfig.class)
 class PriceControllerITTest {
 
   private static final String GET_PRICE = "/prices/getPrice";

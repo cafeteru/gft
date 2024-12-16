@@ -7,7 +7,8 @@ import static org.mockito.Mockito.when;
 
 import io.github.cafeteru.gft.common.dates.DateConverter;
 import io.github.cafeteru.gft.domain.model.PriceRS;
-import io.github.cafeteru.gft.prices.domain.PriceService;
+import io.github.cafeteru.gft.prices.application.service.PriceService;
+import io.github.cafeteru.gft.prices.infrastructure.adapter.in.api.PriceController;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

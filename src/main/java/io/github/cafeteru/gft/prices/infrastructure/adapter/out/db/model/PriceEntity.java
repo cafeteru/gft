@@ -1,4 +1,4 @@
-package io.github.cafeteru.gft.prices.adapter.db.model;
+package io.github.cafeteru.gft.prices.infrastructure.adapter.out.db.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,25 +19,33 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @Table(name = "PRICES")
-public class Price {
+public class PriceEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+
   @Column(name = "BRAND_ID")
   private Integer brandId;
+
   @Column(name = "START_DATE", columnDefinition = "TIMESTAMP")
   private LocalDateTime startDate;
+
   @Column(name = "END_DATE", columnDefinition = "TIMESTAMP")
   private LocalDateTime endDate;
+
   @Column(name = "PRICE_LIST")
   private Integer priceList;
+
   @Column(name = "PRODUCT_ID")
   private Integer productId;
+
   @Column(name = "PRIORITY")
   private Integer priority;
+
   @Column(name = "PRICE", precision = 19, scale = 2)
   private BigDecimal price;
   @Column(name = "CURR")
+
   private String curr;
 }

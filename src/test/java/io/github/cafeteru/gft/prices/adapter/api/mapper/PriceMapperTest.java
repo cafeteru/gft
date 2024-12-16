@@ -6,7 +6,8 @@ import static org.mockito.Mockito.when;
 
 import io.github.cafeteru.gft.common.dates.DateConverter;
 import io.github.cafeteru.gft.domain.model.PriceRS;
-import io.github.cafeteru.gft.prices.adapter.db.model.Price;
+import io.github.cafeteru.gft.prices.domain.Price;
+import io.github.cafeteru.gft.prices.infrastructure.adapter.in.api.mapper.PriceMapperImpl;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
@@ -57,7 +58,7 @@ class PriceMapperTest {
   void testToPriceRS_WhenPriceIsNull_ShouldMapFinalPriceAsNull() {
     price.setPrice(null);
 
-    final PriceRS priceRS = priceMapper.toPriceRS(price);
+    PriceRS priceRS = priceMapper.toPriceRS(price);
 
     assertEquals(price.getProductId(), priceRS.getProductId());
     assertEquals(price.getBrandId(), priceRS.getBrandId());
@@ -67,3 +68,4 @@ class PriceMapperTest {
     assertNull(priceRS.getFinalPrice(), "Expected finalPrice to be null when price is null");
   }
 }
+

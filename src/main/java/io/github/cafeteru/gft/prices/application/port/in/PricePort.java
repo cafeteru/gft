@@ -1,4 +1,4 @@
-package io.github.cafeteru.gft.prices.port;
+package io.github.cafeteru.gft.prices.application.port.in;
 
 import io.github.cafeteru.gft.domain.model.PriceRS;
 import java.time.LocalDateTime;

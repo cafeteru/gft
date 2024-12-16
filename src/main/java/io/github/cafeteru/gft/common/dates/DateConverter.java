@@ -12,21 +12,21 @@ public class DateConverter {
 
   public final String PATTERN = "yyyy-MM-dd-HH.mm.ss";
 
-  public LocalDateTime stringToLocalDateTime(String applicationDate) {
+  public LocalDateTime stringToLocalDateTime(final String applicationDate) {
     try {
       final var formatter = DateTimeFormatter.ofPattern(PATTERN);
       return LocalDateTime.parse(applicationDate, formatter);
-    } catch (NullPointerException | DateTimeParseException e) {
+    } catch (final NullPointerException | DateTimeParseException e) {
       log.error("Invalid String value: {}", applicationDate);
       throw new IllegalArgumentException("Invalid LocalDateTime: " + applicationDate);
     }
   }
 
-  public String localDateTimeToString(LocalDateTime localDateTime) {
+  public String localDateTimeToString(final LocalDateTime localDateTime) {
     try {
-      var formatter = DateTimeFormatter.ofPattern(PATTERN);
+      final var formatter = DateTimeFormatter.ofPattern(PATTERN);
       return localDateTime.format(formatter);
-    } catch (NullPointerException e) {
+    } catch (final NullPointerException e) {
       log.error("Invalid LocalDateTime value: {}", localDateTime);
       throw new IllegalArgumentException("Invalid LocalDateTime: " + localDateTime);
     }

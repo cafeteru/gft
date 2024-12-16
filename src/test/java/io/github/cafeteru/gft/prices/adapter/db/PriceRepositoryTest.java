@@ -6,8 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import io.github.cafeteru.gft.common.dates.DateConverter;
-import io.github.cafeteru.gft.config.TestContainersTestConfig;
-import io.github.cafeteru.gft.prices.adapter.db.model.Price;
+import io.github.cafeteru.gft.config.TestContainersConfig;
+import io.github.cafeteru.gft.prices.application.port.out.PriceRepository;
+import io.github.cafeteru.gft.prices.infrastructure.adapter.out.db.model.PriceEntity;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
@@ -22,7 +23,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 
 @DataJpaTest
-@Import({TestContainersTestConfig.class, DateConverter.class})
+@Import({TestContainersConfig.class, DateConverter.class})
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ActiveProfiles("test")
 class PriceRepositoryTest {
@@ -39,11 +40,15 @@ class PriceRepositoryTest {
   @BeforeEach
   public void init() {
     priceRepository.deleteAll();
-    List<Price> priceList = List.of(
-        createPrice("2020-06-14-00.00.00", "2020-12-31-23.59.59", 1, 0, BigDecimal.valueOf(35.50)),
-        createPrice("2020-06-14-15.00.00", "2020-06-14-18.30.00", 2, 1, BigDecimal.valueOf(25.45)),
-        createPrice("2020-06-15-00.00.00", "2020-06-15-11.00.00", 3, 1, BigDecimal.valueOf(30.50)),
-        createPrice("2020-06-15-16.00.00", "2020-12-31-23.59.59", 4, 1, BigDecimal.valueOf(38.95))
+    final List<PriceEntity> priceList = List.of(
+        createPriceEntity("2020-06-14-00.00.00", "2020-12-31-23.59.59", 1, 0,
+            BigDecimal.valueOf(35.50)),
+        createPriceEntity("2020-06-14-15.00.00", "2020-06-14-18.30.00", 2, 1,
+            BigDecimal.valueOf(25.45)),
+        createPriceEntity("2020-06-15-00.00.00", "2020-06-15-11.00.00", 3, 1,
+            BigDecimal.valueOf(30.50)),
+        createPriceEntity("2020-06-15-16.00.00", "2020-12-31-23.59.59", 4, 1,
+            BigDecimal.valueOf(38.95))
     );
     priceRepository.saveAll(priceList);
   }
@@ -94,12 +99,12 @@ class PriceRepositoryTest {
     assertNotEquals(1, found.size());
   }
 
-  private Price createPrice(
+  private PriceEntity createPriceEntity(
       final String startDate, final String endDate, final Integer priceList, final Integer priority,
       final BigDecimal price) {
     final var startDateConverted = dateConverter.stringToLocalDateTime(startDate);
     final var endDateConverted = dateConverter.stringToLocalDateTime(endDate);
-    return Price.builder()
+    return PriceEntity.builder()
         .brandId(brandId)
         .startDate(startDateConverted)
         .endDate(endDateConverted)
