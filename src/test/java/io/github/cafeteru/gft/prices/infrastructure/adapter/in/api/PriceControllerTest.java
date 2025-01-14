@@ -1,6 +1,7 @@
 package io.github.cafeteru.gft.prices.infrastructure.adapter.in.api;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
@@ -8,9 +9,13 @@ import io.github.cafeteru.gft.common.util.DateConverter;
 import io.github.cafeteru.gft.domain.model.PriceRS;
 import io.github.cafeteru.gft.prices.application.service.PriceService;
 import java.time.LocalDateTime;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
@@ -54,4 +59,25 @@ public class PriceControllerTest {
     assertEquals(HttpStatus.OK.value(), result.getStatusCode().value());
     assertEquals(priceRS, result.getBody());
   }
+
+  @ParameterizedTest
+  @MethodSource("invalidInputs")
+  void when_getPrice_with_invalid_inputs_should_throw_exception(
+      final Integer idProduct, final Integer idBrand) {
+    assertThrows(IllegalArgumentException.class, () ->
+        priceController.getPrice("2023-01-01T00:00:00", idProduct, idBrand));
+  }
+
+  static Stream<Arguments> invalidInputs() {
+    return Stream.of(
+        Arguments.of(null, 1),
+        Arguments.of(1, null),
+        Arguments.of(-1, 1),
+        Arguments.of(1, -1),
+        Arguments.of(0, 1),
+        Arguments.of(1, 0)
+    );
+  }
+
+
 }
