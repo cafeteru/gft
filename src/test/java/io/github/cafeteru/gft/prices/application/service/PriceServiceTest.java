@@ -78,7 +78,7 @@ public class PriceServiceTest {
     when(priceRepository.getPrice(eq(dateTime), eq(productId), eq(brandId))).thenReturn(
         Collections.emptyList());
 
-    final var result = priceService.getPrice(dateTime, productId, brandId);
+    final PriceRS result = priceService.getPrice(dateTime, productId, brandId);
 
     assertNull(result);
     verify(priceRepository).getPrice(dateTime, productId, brandId);
@@ -93,7 +93,7 @@ public class PriceServiceTest {
     when(priceEntityMapper.toPrice(priceEntity)).thenReturn(price);
     when(priceMapper.toPriceRS(price)).thenReturn(priceRS);
 
-    final var result = priceService.getPrice(dateTime, productId, brandId);
+    final PriceRS result = priceService.getPrice(dateTime, productId, brandId);
 
     assertNotNull(result);
     assertEquals(priceRS.getBrandId(), result.getBrandId());
@@ -128,7 +128,7 @@ public class PriceServiceTest {
         List.of(priceEntity, priceEntityPriority));
     when(priceMapper.toPriceRS(pricePriority)).thenReturn(priceRS);
 
-    final var result = priceService.getPrice(dateTime, productId, brandId);
+    final PriceRS result = priceService.getPrice(dateTime, productId, brandId);
 
     assertNotNull(result);
     assertEquals(priceRS.getBrandId(), result.getBrandId());

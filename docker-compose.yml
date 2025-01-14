@@ -8,6 +8,9 @@ services:
       POSTGRES_DB: prices_db
     ports:
       - "5432:5432"
+    networks:
+      - gft_network
+    restart: always
 
   app:
     build:
@@ -22,3 +25,11 @@ services:
       SPRING_DATASOURCE_PASSWORD: postgres
     ports:
       - "8080:8080"
+    networks:
+      - gft_network
+    restart: always
+
+
+networks:
+  gft_network:
+    driver: bridge

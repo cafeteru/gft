@@ -14,7 +14,7 @@ sigue estos pasos:
    docker-compose up --build
     ```
    Este comando hará lo siguiente:
-    - Construirá la imagen de la aplicación Java usando Maven (ejecutando mvn clean install en el
+    - Construirá la imagen de la aplicación Java usando Maven (ejecutando mvn package en el
       proceso).
     - Iniciará un contenedor de PostgreSQL con los datos de conexión definidos en el archivo
       docker-compose.yml.

@@ -15,7 +15,7 @@ public class DateConverterTest {
   @Test
   void when_stringToLocalDateTime_get_correct_date_should_it_works() {
     final String applicationDate = "2021-01-01-01.20.30";
-    final var result = dateConverter.stringToLocalDateTime(applicationDate);
+    final LocalDateTime result = dateConverter.stringToLocalDateTime(applicationDate);
     assertEquals(2021, result.getYear());
     assertEquals(1, result.getMonthValue());
     assertEquals(1, result.getDayOfMonth());
@@ -57,8 +57,8 @@ public class DateConverterTest {
 
   @Test
   void when_localDateTimeToString_get_correct_date_should_works() {
-    final var localDateTime = LocalDateTime.of(2021, 1, 1, 1, 20, 30);
-    final var result = dateConverter.localDateTimeToString(localDateTime);
+    final LocalDateTime localDateTime = LocalDateTime.of(2021, 1, 1, 1, 20, 30);
+    final String result = dateConverter.localDateTimeToString(localDateTime);
     assertEquals("2021-01-01-01.20.30", result);
   }
 
