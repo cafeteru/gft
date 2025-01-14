@@ -41,7 +41,7 @@ public class PriceControllerTest {
 
     final var result = priceController.getPrice(applicationDate, productId, brandId);
 
-    assertEquals(HttpStatus.NO_CONTENT.value(), result.getStatusCode().value());
+    assertEquals(HttpStatus.NOT_FOUND.value(), result.getStatusCode().value());
   }
 
   @Test

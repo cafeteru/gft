@@ -59,7 +59,7 @@ class PriceControllerITTest {
         .queryParams("idBrand", idBrand)
         .get(GET_PRICE)
         .then()
-        .statusCode(HttpStatus.NO_CONTENT.value());
+        .statusCode(HttpStatus.NOT_FOUND.value());
   }
 
   @ParameterizedTest
