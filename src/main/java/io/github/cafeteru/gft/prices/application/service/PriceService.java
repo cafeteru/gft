@@ -6,8 +6,10 @@ import io.github.cafeteru.gft.prices.application.port.out.PriceRepository;
 import io.github.cafeteru.gft.prices.domain.Price;
 import io.github.cafeteru.gft.prices.infrastructure.adapter.in.api.mapper.PriceMapper;
 import io.github.cafeteru.gft.prices.infrastructure.adapter.out.db.mapper.PriceEntityMapper;
+import io.github.cafeteru.gft.prices.infrastructure.adapter.out.db.model.PriceEntity;
 import java.time.LocalDateTime;
 import java.util.Comparator;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,10 +24,10 @@ public class PriceService implements PricePort {
   @Override
   public PriceRS getPrice(final LocalDateTime applicationDate,
       final Integer productId, final Integer brandId) {
-    final var priceEntities = repository.getPrice(applicationDate, productId, brandId);
-    final var prices = priceEntities.stream().map(priceEntityMapper::toPrice).toList();
-    final var result = prices.isEmpty() ?
-        null :
+    final List<PriceEntity> priceEntities = repository.getPrice(applicationDate, productId,
+        brandId);
+    final List<Price> prices = priceEntities.stream().map(priceEntityMapper::toPrice).toList();
+    final Price result = prices.isEmpty() ? null :
         prices.stream().max(Comparator.comparing(Price::getPriority)).orElse(prices.getFirst());
     return priceMapper.toPriceRS(result);
   }

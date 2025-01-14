@@ -14,7 +14,7 @@ public class DateConverter {
 
   public LocalDateTime stringToLocalDateTime(final String applicationDate) {
     try {
-      final var formatter = DateTimeFormatter.ofPattern(PATTERN);
+      final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(PATTERN);
       return LocalDateTime.parse(applicationDate, formatter);
     } catch (final NullPointerException | DateTimeParseException e) {
       log.error("Invalid String value: {}", applicationDate);
@@ -24,7 +24,7 @@ public class DateConverter {
 
   public String localDateTimeToString(final LocalDateTime localDateTime) {
     try {
-      final var formatter = DateTimeFormatter.ofPattern(PATTERN);
+      final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(PATTERN);
       return localDateTime.format(formatter);
     } catch (final NullPointerException e) {
       log.error("Invalid LocalDateTime value: {}", localDateTime);
