@@ -24,6 +24,6 @@ public class PriceController implements PricesApi {
     final PriceRS priceRS = pricePort.getPrice(localDate, idProduct, idBrand);
     return Objects.nonNull(priceRS) ?
         ResponseEntity.ok(priceRS) :
-        ResponseEntity.noContent().build();
+        ResponseEntity.notFound().build();
   }
 }
