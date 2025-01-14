@@ -19,6 +19,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 @ExtendWith(MockitoExtension.class)
 public class PriceControllerTest {
@@ -44,17 +45,19 @@ public class PriceControllerTest {
   void when_getPrice_not_obtain_a_price_should_return_empty() {
     when(priceService.getPrice(eq(localDateTime), eq(productId), eq(brandId))).thenReturn(null);
 
-    final var result = priceController.getPrice(applicationDate, productId, brandId);
+    final ResponseEntity<PriceRS> result = priceController.getPrice(applicationDate, productId,
+        brandId);
 
     assertEquals(HttpStatus.NOT_FOUND.value(), result.getStatusCode().value());
   }
 
   @Test
   void when_getPrice_obtain_a_price_should_return_ok() {
-    final var priceRS = new PriceRS();
+    final PriceRS priceRS = new PriceRS();
     when(priceService.getPrice(eq(localDateTime), eq(productId), eq(brandId))).thenReturn(priceRS);
 
-    final var result = priceController.getPrice(applicationDate, productId, brandId);
+    final ResponseEntity<PriceRS> result = priceController.getPrice(applicationDate, productId,
+        brandId);
 
     assertEquals(HttpStatus.OK.value(), result.getStatusCode().value());
     assertEquals(priceRS, result.getBody());
@@ -78,6 +81,4 @@ public class PriceControllerTest {
         Arguments.of(1, 0)
     );
   }
-
-
 }

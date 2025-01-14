@@ -10,6 +10,7 @@ import io.github.cafeteru.gft.common.util.DateConverter;
 import io.github.cafeteru.gft.prices.infrastructure.adapter.out.db.model.PriceEntity;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -54,15 +55,15 @@ class PriceRepositoryTest {
 
   @Test
   void when_getPrice_with_date_before_all_should_return_a_empty_list() {
-    final var dateTime = dateConverter.stringToLocalDateTime("2020-06-13-23.59.00");
-    final var found = priceRepository.getPrice(dateTime, productId, brandId);
+    final LocalDateTime dateTime = dateConverter.stringToLocalDateTime("2020-06-13-23.59.00");
+    final List<PriceEntity> found = priceRepository.getPrice(dateTime, productId, brandId);
     assertTrue(found.isEmpty());
   }
 
   @Test
   void when_getPrice_with_date_after_all_should_return_a_empty_list() {
-    final var localDateTime = dateConverter.stringToLocalDateTime("2026-06-13-23.59.00");
-    final var found = priceRepository.getPrice(localDateTime, productId, brandId);
+    final LocalDateTime localDateTime = dateConverter.stringToLocalDateTime("2026-06-13-23.59.00");
+    final List<PriceEntity> found = priceRepository.getPrice(localDateTime, productId, brandId);
     assertTrue(found.isEmpty());
   }
 
@@ -74,9 +75,10 @@ class PriceRepositoryTest {
       "2020-06-15-11.00.01",
       "2020-06-15-15.59.59"
   })
-  void when_getPrice_with_date_without_conflicts_should_return_one_result(String applicationDate) {
-    final var localDateTime = dateConverter.stringToLocalDateTime(applicationDate);
-    final var found = priceRepository.getPrice(localDateTime, productId, brandId);
+  void when_getPrice_with_date_without_conflicts_should_return_one_result(
+      final String applicationDate) {
+    final LocalDateTime localDateTime = dateConverter.stringToLocalDateTime(applicationDate);
+    final List<PriceEntity> found = priceRepository.getPrice(localDateTime, productId, brandId);
 
     assertEquals(1, found.size());
     assertEquals(BigDecimal.valueOf(35.50).setScale(2, RoundingMode.HALF_UP),
@@ -91,18 +93,19 @@ class PriceRepositoryTest {
       "2020-06-15-11.00.00",
       "2020-06-15-16.00.00"
   })
-  void when_getPrice_with_date_with_conflicts_should_return_many_result(String applicationDate) {
-    final var localDateTime = dateConverter.stringToLocalDateTime(applicationDate);
-    final var found = priceRepository.getPrice(localDateTime, productId, brandId);
+  void when_getPrice_with_date_with_conflicts_should_return_many_result(
+      final String applicationDate) {
+    final LocalDateTime localDateTime = dateConverter.stringToLocalDateTime(applicationDate);
+    final List<PriceEntity> found = priceRepository.getPrice(localDateTime, productId, brandId);
     assertFalse(found.isEmpty());
     assertNotEquals(1, found.size());
   }
 
   private PriceEntity createPriceEntity(
-      final String startDate, final String endDate, final Integer priceList, final Integer priority,
-      final BigDecimal price) {
-    final var startDateConverted = dateConverter.stringToLocalDateTime(startDate);
-    final var endDateConverted = dateConverter.stringToLocalDateTime(endDate);
+      final String startDate, final String endDate, final Integer priceList,
+      final Integer priority, final BigDecimal price) {
+    final LocalDateTime startDateConverted = dateConverter.stringToLocalDateTime(startDate);
+    final LocalDateTime endDateConverted = dateConverter.stringToLocalDateTime(endDate);
     return PriceEntity.builder()
         .brandId(brandId)
         .startDate(startDateConverted)
